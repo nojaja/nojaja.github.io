@@ -53,6 +53,12 @@ pre {
    https://rawgit.com/nojaja/node-htmlparser/v2.1/lib/htmlparser.js
    https://rawgit.com/nojaja/node-htmlcompiler/v1.0.1/lib/htmlcompiler.js
   </pre>
+  <select id='targeturl' name='targeturl'>
+  <option value=''>-</option>
+  <option value='https://codepen.io/nojaja/pen/mmYdwe.html'>test1</option>
+  <option value='https://codepen.io/nojaja/pen/mmYdwe.html'>test2</option>
+  </select>
+
 </div><br>
 
 <div class="code-frame">
@@ -245,6 +251,14 @@ $(function () {
     var input = document.getElementById("input").innerHTML.trim();
     input = input.replace(/&gl;/g, "<").replace(/&gt;/g, ">");
     editor.setValue(input);
+    $("#targeturl").change( function(){
+      $.ajax({
+        url: $('#targeturl').val(),
+        dataType: 'html'
+      }).done(function(d) {
+        editor.setValue(d);
+      }) 
+    });
 
     var editor2 = monaco.editor.create(document.getElementById("container2"), {
       language: "json"
