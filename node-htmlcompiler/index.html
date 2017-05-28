@@ -195,7 +195,8 @@ var parseHtml = function parseHtml(rawHtml) {
   return htmlparser.parseDOM(rawHtml, {
     enforceEmptyTags: true,
     ignoreWhitespace: true,
-    caseSensitiveTags: true,
+    caseSensitiveTags:true,
+    caseSensitiveAttr:true,
     verbose: false
   });
 };
@@ -227,20 +228,6 @@ var DebugBuilder = function (_Builder) {
 ;
 
 //View///////////////////////////////////////////////////
-var webComponentParser = new WebComponentParser({
-  builder: ReactComponentBuilder
-});
-
-var reactRootParser = new ReactRootComponentBuilder({
-  builder: ReactComponentBuilder
-});
-
-var builder = new HtmlBuilder({});
-var debugBuilder = new DebugBuilder({});
-var cssbuilder = new CSSBuilder({});
-var reactComponentBuilder = new ReactComponentBuilder({});
-var compiler = new Compiler([cssbuilder, webComponentParser, reactRootParser, builder], {});
-
 $(function () {
   require.config({
     paths: {
@@ -279,16 +266,28 @@ $(function () {
     var editor6 = monaco.editor.create(document.getElementById("container6"), {
       language: "javascript"
     });
-    var myBinding = editor.addCommand(monaco.KeyCode.F9, function () {
-      //editor2.setValue(editor.getValue());
+	var myBinding = editor.addCommand(monaco.KeyCode.F9, function () {
+      var webComponentParser = new WebComponentParser({
+		  builder: ReactComponentBuilder
+      });
+
+      var reactRootParser = new ReactRootComponentBuilder({
+		  builder: ReactComponentBuilder
+      });
+
+      var builder = new HtmlBuilder({});
+      var debugBuilder = new DebugBuilder({});
+      var cssbuilder = new CSSBuilder({});
+      var reactComponentBuilder = new ReactComponentBuilder({});
+      var compiler1 = new Compiler([cssbuilder,webComponentParser,reactRootParser], {});
+      var compiler2 = new Compiler([builder], {});
 
       //-ここからDemo用処理----------------------------------
       var parseData = parseHtml(editor.getValue().trim());
-      var compileData = compiler.compile(parseData); //jsonオブジェクトを各種コードに変換します
+      compiler1.compile(parseData);//jsonオブジェクトを各種コードに変換します
 
       editor2.setValue(stringify(parseData));
       console.log(stringify(builder.getNodes()));
-      editor3.setValue(builder.getNodes());
       editor4.setValue(cssbuilder.getNodes());
 
       webComponentParser.build(); //react化処理の実行
@@ -297,33 +296,108 @@ $(function () {
       //変換されたコードはwindowに読み込まれ実行可能になります。
       editor5.setValue(webComponentParser.getResult());
       editor6.setValue(reactRootParser.getResult());
-	      
-      var $html = $("<html>").html(builder.getNodes());
-      var $body = $html.find('body');
-      var $head = $html.find('head');
+
+      if(parseData.getElementsByTagName('head').length==0){
+        var newElement = parseData.createElement('tag');
+        newElement.name = 'head';
+        parseData.appendChild(newElement);
+      };
       
-      $("<script>").attr("src", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js").appendTo($head);
-      $("<script>").attr("src", "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.5/js/uikit.min.js").appendTo($head);
-      $("<script>").attr("src", "https://fb.me/react-15.1.0.js").appendTo($head);
-      $("<script>").attr("src", "https://fb.me/react-dom-15.1.0.js").appendTo($head);
+      //parseData =(parseData.getElementsByTagName('body').length>0)?parseData.getElementsByTagName('body')[0].children:parseData;
+      var headElements = parseData.getElementsByTagName("head");
+      var bodyElements = parseData.getElementsByTagName("body");
+      headElements.forEach(function(headElement){
+        //head配下に追加
+        {
+        var newElement = headElement.createElement('tag');
+        newElement.name = 'script';
+        newElement.children=[];
+        var child = newElement.createElement('text')
+        child.data = '';
+        newElement.appendChild(child);
+        newElement.attributes = {'src':[{
+															"type": "text",
+															"data": "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+														}]};
+        headElement.appendChild(newElement);
+        }
+        {
+        var newElement = headElement.createElement('tag');
+        newElement.name = 'script';
+        newElement.children=[];
+        var child = newElement.createElement('text')
+        child.data = '';
+        newElement.appendChild(child);
+        newElement.attributes = {'src':[{
+															"type": "text",
+															"data": "https://fb.me/react-15.1.0.js"
+														}]};
+        headElement.appendChild(newElement);
+        }
+        {
+        var newElement = headElement.createElement('tag');
+        newElement.name = 'script';
+        newElement.children=[];
+        var child = newElement.createElement('text')
+        child.data = '';
+        newElement.appendChild(child);
+        newElement.attributes = {'src':[{
+															"type": "text",
+															"data": "https://fb.me/react-dom-15.1.0.js"
+														}]};
+        headElement.appendChild(newElement);
+        }
+        
+        {
+        var newElement = headElement.createElement('tag');
+        newElement.name = 'script';
+        newElement.children=[];
+        var child = newElement.createElement('text')
+        child.data = webComponentParser.getResult();
+        newElement.appendChild(child);
+        headElement.appendChild(newElement);
+        }
+        {
+        var newElement = headElement.createElement('tag');
+        newElement.name = 'script';
+        newElement.children=[];
+        var child = newElement.createElement('text')
+        child.data = reactRootParser.getResult();
+        newElement.appendChild(child);
+        headElement.appendChild(newElement);
+        }
+      },this);
       
-      $("<script>").html(webComponentParser.getResult()).appendTo($head);
-      $("<script>").html(reactRootParser.getResult()).appendTo($head);
-      $("<script>").html(`
-$(document).ready(function(){
-  var render = function render() {
-    ReactDOM.render(
-      React.createElement(App, null),
-      document.querySelector('#app')
-    );
-  };
+      bodyElements.forEach(function(bodyElement){
+        {
+        var newElement = bodyElement.createElement('tag');
+        newElement.name = 'script';
+        newElement.children=[];
+        var child = newElement.createElement('text')
+        child.data = `
+ var render = function render() {
+  ReactDOM.render(
+    React.createElement(App, null),
+    document.querySelector("#app")
+  );
+};
+
+$(function() {
   /* render initial component */
   render();
 });
-`).appendTo($body);
+`;
+        newElement.appendChild(child);
+        bodyElement.appendChild(newElement);
+        }
+      },this);
       
+      //parseData =(parseData.getElementsByTagName('body').length>0)?parseData.getElementsByTagName('body')[0].children:parseData;
+      compiler2.compile(parseData);//jsonオブジェクトを各種コードに変換します
+      editor3.setValue(builder.getNodes());
       // iframe内のコンテンツのdocumentオブジェクト追加
-      $('#child-frame').attr("srcdoc",$html.html());
+      $('#child-frame').attr("srcdoc",builder.getNodes());
+      
     });
   });
 });
