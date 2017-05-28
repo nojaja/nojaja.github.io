@@ -297,37 +297,33 @@ $(function () {
       //変換されたコードはwindowに読み込まれ実行可能になります。
       editor5.setValue(webComponentParser.getResult());
       editor6.setValue(reactRootParser.getResult());
-	    
-      var $iframe = $('#child-frame').contents();
-      // iframe内のコンテンツのdocumentオブジェクト
-      $iframe.find('html').html(builder.getNodes());
-      //$iframe.find('body').append('<script>'+builder.getNodes()+'<\/script>');
-      var $body = $iframe.find('body');
-      var $head = $iframe.find('head');
+	      
+      var $html = $("<html>").html(builder.getNodes());
+      var $body = $html.find('body');
+      var $head = $html.find('head');
       
       $("<script>").attr("src", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js").appendTo($head);
-      //$("<script>").attr("src", "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.5/js/uikit.min.js").appendTo($head);
+      $("<script>").attr("src", "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.5/js/uikit.min.js").appendTo($head);
       $("<script>").attr("src", "https://fb.me/react-15.1.0.js").appendTo($head);
-      //$("<script>").attr("src", "https://fb.me/react-dom-15.1.0.js").appendTo($head);
+      $("<script>").attr("src", "https://fb.me/react-dom-15.1.0.js").appendTo($head);
       
-      $("<script>").html(webComponentParser.getResult()).appendTo($body);
-      $("<script>").html(reactRootParser.getResult()).appendTo($body);
+      $("<script>").html(webComponentParser.getResult()).appendTo($head);
+      $("<script>").html(reactRootParser.getResult()).appendTo($head);
       $("<script>").html(`
-$(function() {
+$(document).ready(function(){
   var render = function render() {
-    debugger;
-    console.log($("#app"));
     ReactDOM.render(
       React.createElement(App, null),
-      $("#app")
+      document.querySelector('#app')
     );
   };
-
   /* render initial component */
   render();
 });
 `).appendTo($body);
-	    
+      
+      // iframe内のコンテンツのdocumentオブジェクト追加
+      $('#child-frame').attr("srcdoc",$html.html());
     });
   });
 });
