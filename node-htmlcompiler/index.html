@@ -377,7 +377,7 @@ $(function() {
       },this);
       
       //parseData =(parseData.getElementsByTagName('body').length>0)?parseData.getElementsByTagName('body')[0].children:parseData;
-      compiler2.compile(parseData);//jsonオブジェクトを各種コードに変換します
+      compiler2.compile(parseData.children);//jsonオブジェクトを各種コードに変換します
       editor3.setValue(builder.getNodes());
       // iframe内のコンテンツのdocumentオブジェクト追加
       $('#child-frame').attr("srcdoc",builder.getNodes());
