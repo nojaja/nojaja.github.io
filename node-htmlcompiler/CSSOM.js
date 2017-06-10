@@ -1,7 +1,20 @@
 (function(root) {
 	'use strict';
-	var exports = {};
-	var CSSOM = root.CSSOM = {};
+
+	var exports;
+	if (typeof(module) !== 'undefined' && typeof(module.exports) !== 'undefined') {
+	    exports = module.exports;
+	} else {
+	    exports = {};
+	    if (this.CSSOM) {
+	        return;
+	    }
+	    this.CSSOM = exports;
+			root.CSSOM = exports;
+	}
+	//var CSSOM = root.CSSOM = {};
+	var CSSOM = exports;
+
 //.CommonJS
 var CSSOM = CSSOM||{};
 ///CommonJS
