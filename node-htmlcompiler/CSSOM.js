@@ -1,15 +1,14 @@
 (function(root) {
 	'use strict';
-	
-var exports = {};
-function require(path) {
-	path = path.replace(/^\.\//, '');
-	if (!exports[path]) {
-		window.console && console.warn(path, 'is missing. Most likely just a mutual inclusion.');
+	var exports = {};
+	function require(path) {
+		path = path.replace(/^\.\//, '');
+		if (!exports[path]) {
+			window.console && console.warn(path, 'is missing. Most likely just a mutual inclusion.');
+		}
+		return exports;
 	}
-	return exports;
-}
-	
+
 	var CSSOM = root.CSSOM = {};
 //.CommonJS
 var CSSOM = CSSOM||{};
@@ -1189,7 +1188,7 @@ CSSOM.CSSValueExpression.prototype._parseJSComment = function(token, idx) {
  * @return {Object|false}
  *					- idx:
  *					- text:
- *					or 
+ *					or
  *					false
  *
  */
@@ -1216,14 +1215,14 @@ CSSOM.CSSValueExpression.prototype._parseJSString = function(token, idx, sep) {
  * @return {Object|false}
  *				- idx:
  *				- regExp:
- *				or 
+ *				or
  *				false
  */
 
 /*
 
 all legal RegExp
- 
+
 /a/
 (/a/)
 [/a/]
@@ -1760,10 +1759,15 @@ CSSOM.CSSKeyframeRule = require('./CSSKeyframeRule').CSSKeyframeRule;
 CSSOM.CSSKeyframesRule = require('./CSSKeyframesRule').CSSKeyframesRule;
 CSSOM.CSSValueExpression = require('./CSSValueExpression').CSSValueExpression;
 CSSOM.CSSDocumentRule = require('./CSSDocumentRule').CSSDocumentRule;
-CSSOM.StyleSheet = require("./StyleSheet").StyleSheet;
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
-
+//.CommonJS
+CSSOM.CSSStyleSheet = require("./CSSStyleSheet").CSSStyleSheet;
+CSSOM.CSSStyleRule = require("./CSSStyleRule").CSSStyleRule;
+CSSOM.CSSMediaRule = require("./CSSMediaRule").CSSMediaRule;
+CSSOM.CSSStyleDeclaration = require('./CSSStyleDeclaration').CSSStyleDeclaration;
+CSSOM.CSSKeyframeRule = require('./CSSKeyframeRule').CSSKeyframeRule;
+CSSOM.CSSKeyframesRule = require('./CSSKeyframesRule').CSSKeyframesRule;
+///CommonJS
 
 
 /**
