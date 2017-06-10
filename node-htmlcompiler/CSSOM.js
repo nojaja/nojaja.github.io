@@ -6,11 +6,10 @@
 	    exports = module.exports;
 	} else {
 	    exports = {};
-	    if (this.CSSOM) {
+	    if (root.CSSOM) {
 	        return;
 	    }
-	    this.CSSOM = exports;
-			root.CSSOM = exports;
+	    root.CSSOM = exports;
 	}
 	//var CSSOM = root.CSSOM = {};
 	var CSSOM = exports;
