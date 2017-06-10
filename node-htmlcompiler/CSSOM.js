@@ -1771,16 +1771,7 @@ CSSOM.CSSKeyframesRule = require('./CSSKeyframesRule').CSSKeyframesRule;
 CSSOM.CSSValueExpression = require('./CSSValueExpression').CSSValueExpression;
 CSSOM.CSSDocumentRule = require('./CSSDocumentRule').CSSDocumentRule;
 ///CommonJS
-//.CommonJS
-var CSSOM = {
-	CSSStyleSheet: require("./CSSStyleSheet").CSSStyleSheet,
-	CSSStyleRule: require("./CSSStyleRule").CSSStyleRule,
-	CSSMediaRule: require("./CSSMediaRule").CSSMediaRule,
-	CSSStyleDeclaration: require("./CSSStyleDeclaration").CSSStyleDeclaration,
-	CSSKeyframeRule: require('./CSSKeyframeRule').CSSKeyframeRule,
-	CSSKeyframesRule: require('./CSSKeyframesRule').CSSKeyframesRule
-};
-///CommonJS
+
 
 
 /**
