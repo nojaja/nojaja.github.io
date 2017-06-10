@@ -203,8 +203,6 @@ exports.CSSRule = CSSOM.CSSRule;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSStyleDeclaration = require("./CSSStyleDeclaration").CSSStyleDeclaration;
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -453,8 +451,6 @@ exports.MediaList = CSSOM.MediaList;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
-CSSOM.MediaList = require("./MediaList").MediaList;
 ///CommonJS
 
 
@@ -493,9 +489,6 @@ exports.CSSMediaRule = CSSOM.CSSMediaRule;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
-CSSOM.CSSStyleSheet = require("./CSSStyleSheet").CSSStyleSheet;
-CSSOM.MediaList = require("./MediaList").MediaList;
 ///CommonJS
 
 
@@ -624,8 +617,6 @@ exports.CSSImportRule = CSSOM.CSSImportRule;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSStyleDeclaration = require("./CSSStyleDeclaration").CSSStyleDeclaration;
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -659,7 +650,6 @@ exports.CSSFontFaceRule = CSSOM.CSSFontFaceRule;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -712,8 +702,6 @@ exports.StyleSheet = CSSOM.StyleSheet;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.StyleSheet = require("./StyleSheet").StyleSheet;
-CSSOM.CSSStyleRule = require("./CSSStyleRule").CSSStyleRule;
 ///CommonJS
 
 
@@ -795,11 +783,9 @@ CSSOM.CSSStyleSheet.prototype.toString = function() {
 
 //.CommonJS
 exports.CSSStyleSheet = CSSOM.CSSStyleSheet;
-CSSOM.parse = require('./parse').parse; // Cannot be included sooner due to the mutual dependency between parse.js and CSSStyleSheet.js
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -837,8 +823,6 @@ exports.CSSKeyframesRule = CSSOM.CSSKeyframesRule;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
-CSSOM.CSSStyleDeclaration = require("./CSSStyleDeclaration").CSSStyleDeclaration;
 ///CommonJS
 
 
@@ -935,8 +919,6 @@ exports.MatcherList = CSSOM.MatcherList;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSRule = require("./CSSRule").CSSRule;
-CSSOM.MatcherList = require("./MatcherList").MatcherList;
 ///CommonJS
 
 
@@ -1016,7 +998,6 @@ exports.CSSValue = CSSOM.CSSValue;
 ///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
-CSSOM.CSSValue = require("./CSSValue").CSSValue;
 ///CommonJS
 
 
@@ -1748,28 +1729,7 @@ CSSOM.parse = function parse(token) {
 //.CommonJS
 exports.parse = CSSOM.parse;
 // The following modules cannot be included sooner due to the mutual dependency with parse.js
-CSSOM.CSSStyleSheet = require("./CSSStyleSheet").CSSStyleSheet;
-CSSOM.CSSStyleRule = require("./CSSStyleRule").CSSStyleRule;
-CSSOM.CSSImportRule = require("./CSSImportRule").CSSImportRule;
-CSSOM.CSSMediaRule = require("./CSSMediaRule").CSSMediaRule;
-CSSOM.CSSFontFaceRule = require("./CSSFontFaceRule").CSSFontFaceRule;
-CSSOM.CSSHostRule = require("./CSSHostRule").CSSHostRule;
-CSSOM.CSSStyleDeclaration = require('./CSSStyleDeclaration').CSSStyleDeclaration;
-CSSOM.CSSKeyframeRule = require('./CSSKeyframeRule').CSSKeyframeRule;
-CSSOM.CSSKeyframesRule = require('./CSSKeyframesRule').CSSKeyframesRule;
-CSSOM.CSSValueExpression = require('./CSSValueExpression').CSSValueExpression;
-CSSOM.CSSDocumentRule = require('./CSSDocumentRule').CSSDocumentRule;
 ///CommonJS
-//.CommonJS
-CSSOM.CSSStyleSheet = require("./CSSStyleSheet").CSSStyleSheet;
-CSSOM.CSSStyleRule = require("./CSSStyleRule").CSSStyleRule;
-CSSOM.CSSMediaRule = require("./CSSMediaRule").CSSMediaRule;
-CSSOM.CSSStyleDeclaration = require('./CSSStyleDeclaration').CSSStyleDeclaration;
-CSSOM.CSSKeyframeRule = require('./CSSKeyframeRule').CSSKeyframeRule;
-CSSOM.CSSKeyframesRule = require('./CSSKeyframesRule').CSSKeyframesRule;
-///CommonJS
-
-
 /**
  * Produces a deep copy of stylesheet — the instance variables of stylesheet are copied recursively.
  * @param {CSSStyleSheet|CSSOM.CSSStyleSheet} stylesheet
