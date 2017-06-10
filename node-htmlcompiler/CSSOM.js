@@ -1,6 +1,8 @@
 (function(root) {
 	'use strict';
 
+var exports = {};
+
 	var CSSOM = root.CSSOM = {};
 //.CommonJS
 var CSSOM = {};
