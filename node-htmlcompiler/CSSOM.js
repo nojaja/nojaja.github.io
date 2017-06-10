@@ -145,11 +145,8 @@ CSSOM.CSSStyleDeclaration.prototype = {
 	}
 };
 
-
 //.CommonJS
 exports.CSSStyleDeclaration = CSSOM.CSSStyleDeclaration;
-CSSOM.parse = require('./parse').parse; // Cannot be included sooner due to the mutual dependency between parse.js and CSSStyleDeclaration.js
-///CommonJS
 //.CommonJS
 var CSSOM = CSSOM||{};
 ///CommonJS
