@@ -1,6 +1,6 @@
 (function(root) {
 	'use strict';
-
+	
 var exports = {};
 function require(path) {
 	path = path.replace(/^\.\//, '');
@@ -12,7 +12,7 @@ function require(path) {
 	
 	var CSSOM = root.CSSOM = {};
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
@@ -160,7 +160,7 @@ exports.CSSStyleDeclaration = CSSOM.CSSStyleDeclaration;
 CSSOM.parse = require('./parse').parse; // Cannot be included sooner due to the mutual dependency between parse.js and CSSStyleDeclaration.js
 ///CommonJS
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
@@ -203,10 +203,9 @@ CSSOM.CSSRule.prototype = {
 exports.CSSRule = CSSOM.CSSRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSStyleDeclaration: require("./CSSStyleDeclaration").CSSStyleDeclaration,
-	CSSRule: require("./CSSRule").CSSRule
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSStyleDeclaration = require("./CSSStyleDeclaration").CSSStyleDeclaration;
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -393,7 +392,7 @@ CSSOM.CSSStyleRule.parse = function(ruleText) {
 exports.CSSStyleRule = CSSOM.CSSStyleRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
@@ -454,10 +453,9 @@ CSSOM.MediaList.prototype = {
 exports.MediaList = CSSOM.MediaList;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSRule: require("./CSSRule").CSSRule,
-	MediaList: require("./MediaList").MediaList
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
+CSSOM.MediaList = require("./MediaList").MediaList;
 ///CommonJS
 
 
@@ -495,11 +493,10 @@ Object.defineProperty(CSSOM.CSSMediaRule.prototype, "cssText", {
 exports.CSSMediaRule = CSSOM.CSSMediaRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSRule: require("./CSSRule").CSSRule,
-	CSSStyleSheet: require("./CSSStyleSheet").CSSStyleSheet,
-	MediaList: require("./MediaList").MediaList
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
+CSSOM.CSSStyleSheet = require("./CSSStyleSheet").CSSStyleSheet;
+CSSOM.MediaList = require("./MediaList").MediaList;
 ///CommonJS
 
 
@@ -627,10 +624,9 @@ Object.defineProperty(CSSOM.CSSImportRule.prototype, "cssText", {
 exports.CSSImportRule = CSSOM.CSSImportRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSStyleDeclaration: require("./CSSStyleDeclaration").CSSStyleDeclaration,
-	CSSRule: require("./CSSRule").CSSRule
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSStyleDeclaration = require("./CSSStyleDeclaration").CSSStyleDeclaration;
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -663,9 +659,8 @@ Object.defineProperty(CSSOM.CSSFontFaceRule.prototype, "cssText", {
 exports.CSSFontFaceRule = CSSOM.CSSFontFaceRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSRule: require("./CSSRule").CSSRule
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -700,7 +695,7 @@ Object.defineProperty(CSSOM.CSSHostRule.prototype, "cssText", {
 exports.CSSHostRule = CSSOM.CSSHostRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
@@ -717,10 +712,9 @@ CSSOM.StyleSheet = function StyleSheet() {
 exports.StyleSheet = CSSOM.StyleSheet;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	StyleSheet: require("./StyleSheet").StyleSheet,
-	CSSStyleRule: require("./CSSStyleRule").CSSStyleRule
-};
+var CSSOM = CSSOM||{};
+CSSOM.StyleSheet = require("./StyleSheet").StyleSheet;
+CSSOM.CSSStyleRule = require("./CSSStyleRule").CSSStyleRule;
 ///CommonJS
 
 
@@ -805,9 +799,8 @@ exports.CSSStyleSheet = CSSOM.CSSStyleSheet;
 CSSOM.parse = require('./parse').parse; // Cannot be included sooner due to the mutual dependency between parse.js and CSSStyleSheet.js
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSRule: require("./CSSRule").CSSRule
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
 ///CommonJS
 
 
@@ -844,10 +837,9 @@ Object.defineProperty(CSSOM.CSSKeyframesRule.prototype, "cssText", {
 exports.CSSKeyframesRule = CSSOM.CSSKeyframesRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSRule: require("./CSSRule").CSSRule,
-	CSSStyleDeclaration: require('./CSSStyleDeclaration').CSSStyleDeclaration
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
+CSSOM.CSSStyleDeclaration = require("./CSSStyleDeclaration").CSSStyleDeclaration;
 ///CommonJS
 
 
@@ -881,7 +873,7 @@ Object.defineProperty(CSSOM.CSSKeyframeRule.prototype, "cssText", {
 exports.CSSKeyframeRule = CSSOM.CSSKeyframeRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
@@ -943,10 +935,9 @@ CSSOM.MatcherList.prototype = {
 exports.MatcherList = CSSOM.MatcherList;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-    CSSRule: require("./CSSRule").CSSRule,
-    MatcherList: require("./MatcherList").MatcherList
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSRule = require("./CSSRule").CSSRule;
+CSSOM.MatcherList = require("./MatcherList").MatcherList;
 ///CommonJS
 
 
@@ -982,7 +973,7 @@ Object.defineProperty(CSSOM.CSSDocumentRule.prototype, "cssText", {
 exports.CSSDocumentRule = CSSOM.CSSDocumentRule;
 ///CommonJS
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
@@ -1025,9 +1016,8 @@ CSSOM.CSSValue.prototype = {
 exports.CSSValue = CSSOM.CSSValue;
 ///CommonJS
 //.CommonJS
-var CSSOM = {
-	CSSValue: require('./CSSValue').CSSValue
-};
+var CSSOM = CSSOM||{};
+CSSOM.CSSValue = require("./CSSValue").CSSValue;
 ///CommonJS
 
 
@@ -1369,7 +1359,7 @@ CSSOM.CSSValueExpression.prototype._findMatchedIdx = function(token, idx, sep) {
 exports.CSSValueExpression = CSSOM.CSSValueExpression;
 ///CommonJS
 //.CommonJS
-var CSSOM = {};
+var CSSOM = CSSOM||{};
 ///CommonJS
 
 
