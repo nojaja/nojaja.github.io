@@ -13,7 +13,8 @@ var sourceList = {
   test1: "https://codepen.io/nojaja/pen/mmYdwe.html",
   test2: "https://codepen.io/nojaja/pen/YVbzRw.html",
   test3: "https://codepen.io/nojaja/pen/ZKNJgG.html",
-  test4: "https://codepen.io/nojaja/pen/GmaOqg.html"
+  test4: "https://codepen.io/nojaja/pen/GmaOqg.html",
+  test4: "https://codepen.io/nojaja/pen/OgNgyy.html"
 };
 var data = {
   source: {
@@ -90,6 +91,9 @@ $("#test3").on("click", function (event) {
 });
 $("#test4").on("click", function (event) {
   changeSrc("test4");
+});
+$("#test5").on("click", function (event) {
+  changeSrc("test5");
 });
 var htmlparser = Tautologistics.NodeHtmlParser;
 
