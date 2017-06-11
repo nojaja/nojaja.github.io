@@ -14,7 +14,8 @@ var sourceList = {
   test2: "https://codepen.io/nojaja/pen/YVbzRw.html",
   test3: "https://codepen.io/nojaja/pen/ZKNJgG.html",
   test4: "https://codepen.io/nojaja/pen/GmaOqg.html",
-  test5: "https://codepen.io/nojaja/pen/OgNgyy.html"
+  test5: "https://codepen.io/nojaja/pen/OgNgyy.html",
+  test6: "https://codepen.io/nojaja/pen/weGqej.html"
 };
 var data = {
   source: {
@@ -95,6 +96,9 @@ $("#test4").on("click", function (event) {
 $("#test5").on("click", function (event) {
   changeSrc("test5");
 });
+$("#test6").on("click", function(event) {
+  changeSrc("test6");
+});
 var htmlparser = Tautologistics.NodeHtmlParser;
 
 var parseHtml = function parseHtml(rawHtml) {
@@ -152,7 +156,7 @@ $(function () {
       model: data.source.model
     });
 
-    changeSrc("test4", function () {
+    changeSrc("test5", function () {
       compile();
     });
   });
@@ -175,9 +179,9 @@ $(function () {
 
     //-ここからDemo用処理----------------------------------
     var parseData = parseHtml(data.source.model.getValue().trim());
+    data.dom.model.setValue(stringify(parseData));
     compiler1.compile(parseData); //jsonオブジェクトを各種コードに変換します
 
-    data.dom.model.setValue(stringify(parseData));
     //editor4.setValue(cssbuilder.getNodes());
 
     webComponentParser.build(); //react化処理の実行
