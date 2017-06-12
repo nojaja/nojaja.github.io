@@ -9,15 +9,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var editor = null;
-var sourceList = {
-  test1: "https://codepen.io/nojaja/pen/mmYdwe.html",
-  test2: "https://codepen.io/nojaja/pen/YVbzRw.html",
-  test3: "https://codepen.io/nojaja/pen/ZKNJgG.html",
-  test4: "https://codepen.io/nojaja/pen/GmaOqg.html",
-  test5: "https://codepen.io/nojaja/pen/OgNgyy.html",
-  test6: "https://codepen.io/nojaja/pen/weGqej.html",
-  test7: "https://codepen.io/nojaja/pen/BZKxQJ.html"
-};
 var data = {
   source: {
     model: null,
@@ -55,54 +46,25 @@ function changeTab(editor, desiredModelId) {
   editor.focus();
 }
 
-$("#source").on("click", function (event) {
-  changeTab(editor, "source");
-});
-$("#dom").on("click", function (event) {
-  changeTab(editor, "dom");
-});
-$("#component").on("click", function (event) {
-  changeTab(editor, "component");
-});
-$("#app").on("click", function (event) {
-  changeTab(editor, "app");
-});
-$("#html").on("click", function (event) {
-  changeTab(editor, "html");
+$("#edittab > li").on("click", function (event) {
+  changeTab(editor, $(this).attr("id"));
 });
 
-function changeSrc(SrcId, cb) {
+function changeSrc(url, cb) {
   $.ajax({
-    url: sourceList[SrcId],
+    url: url,
     dataType: "html"
   }).done(function (d) {
     //editor.setValue(d);
     data.source.model.setValue(d);
     $("#child-frame").attr("srcdoc", "");
-    return cb();
+    if (cb) return cb();
   });
 }
-$("#test1").on("click", function (event) {
-  changeSrc("test1");
+$(".samples").on("click", function (event) {
+  changeSrc($(this).attr("data-url"));
 });
-$("#test2").on("click", function (event) {
-  changeSrc("test2");
-});
-$("#test3").on("click", function (event) {
-  changeSrc("test3");
-});
-$("#test4").on("click", function (event) {
-  changeSrc("test4");
-});
-$("#test5").on("click", function (event) {
-  changeSrc("test5");
-});
-$("#test6").on("click", function(event) {
-  changeSrc("test6");
-});
-$("#test7").on("click", function(event) {
-  changeSrc("test7");
-});
+
 var htmlparser = Tautologistics.NodeHtmlParser;
 
 var parseHtml = function parseHtml(rawHtml) {
@@ -139,6 +101,14 @@ var DebugBuilder = function (_Builder) {
   return DebugBuilder;
 }(Builder);
 
+var arg = new Object();
+var pair = location.search.substring(1).split('&');
+for (var i = 0; pair[i]; i++) {
+  var kv = pair[i].split('=');
+  arg[kv[0]] = kv[1];
+}
+
+
 var editorContainer = document.getElementById("container");
 
 //View///////////////////////////////////////////////////
@@ -159,8 +129,8 @@ $(function () {
       automaticLayout: true,
       model: data.source.model
     });
-
-    changeSrc("test5", function () {
+    var url = arg["q"] ? arg["q"] : $("#test5").attr("data-url");
+    changeSrc(url, function () {
       compile();
     });
   });
@@ -287,4 +257,6 @@ function stringify(str) {
     if (key == "parentNode") return;
     return value;
   }, "\t");
+    "\t"
+  );
 }
