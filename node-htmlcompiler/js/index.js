@@ -256,7 +256,7 @@ function stringify(str) {
     }
     if (key == "parentNode") return;
     return value;
-  }, "\t");
+  },
     "\t"
   );
 }
