@@ -254,7 +254,7 @@ $(function () {
         newElement.innerHTML  = webComponentParser.getResult();
         iframehead.appendChild(newElement);
     }
-    document.getElementById("child-frame").contentDocument.innerHTML = builder2.getNodes();
+    document.getElementById("child-frame").contentDocument.body.innerHTML = builder2.getNodes();
   }
 
   $("#run").on("click", function (event) {
