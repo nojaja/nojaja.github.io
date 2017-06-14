@@ -241,7 +241,7 @@ $(function () {
     // iframe内のコンテンツのdocumentオブジェクト追加
     //$("#child-frame").attr("srcdoc", builder.getNodes());
 
-    var iframehead = $('#child-frame').contents().find('head');
+    var iframehead = document.getElementById("child-frame").contentDocument.head;
     {
     var newElement = document.createElement("script");
         newElement.type = "text/javascript";
@@ -254,8 +254,7 @@ $(function () {
         newElement.innerHTML  = webComponentParser.getResult();
         iframehead.appendChild(newElement);
     }
-
-    $('#child-frame').contents().find('body').html(builder2.getNodes());
+    document.getElementById("child-frame").contentDocument.innerHTML = builder2.getNodes();
   }
 
   $("#run").on("click", function (event) {
