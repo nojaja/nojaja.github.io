@@ -57,7 +57,7 @@ function changeSrc(url, cb) {
   }).done(function (d) {
     //editor.setValue(d);
     data.source.model.setValue(d);
-    //$("#child-frame").attr("srcdoc", "");
+    $("#child-frame").attr("srcdoc", "");
     //$("#child-frame").attr("src", "./blank.html");
     if (cb) return cb();
   });
@@ -239,7 +239,7 @@ $(function () {
     compiler3.compile(bodyElements[0].children); //jsonオブジェクトを各種コードに変換します
     data.html.model.setValue(builder.getNodes());
     // iframe内のコンテンツのdocumentオブジェクト追加
-    //$("#child-frame").attr("srcdoc", builder.getNodes());
+    $("#child-frame").attr("srcdoc", builder.getNodes());
 
 /*
     var iframehead = document.getElementById("child-frame").contentDocument.head;
@@ -257,7 +257,7 @@ $(function () {
     }
     //document.getElementById("child-frame").contentDocument.body.innerHTML = builder2.getNodes();
 */
-document.getElementById("child-frame").contentDocument.innerHTML = builder.getNodes();
+//document.getElementById("child-frame").contentDocument.innerHTML = builder.getNodes();
 
   }
 
