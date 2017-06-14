@@ -240,6 +240,21 @@ $(function () {
     data.html.model.setValue(builder.getNodes());
     // iframe内のコンテンツのdocumentオブジェクト追加
     //$("#child-frame").attr("srcdoc", builder.getNodes());
+
+    var iframehead = $('#child-frame').contents().find('head');
+    {
+    var newElement = document.createElement("script");
+        newElement.type = "text/javascript";
+        newElement.innerHTML  = reactRootParser.getResult();
+        iframehead.appendChild(newElement);
+    }
+    {
+    var newElement = document.createElement("script");
+        newElement.type = "text/javascript";
+        newElement.innerHTML  = webComponentParser.getResult();
+        iframehead.appendChild(newElement);
+    }
+
     $('#child-frame').contents().find('body').html(builder2.getNodes());
   }
 
