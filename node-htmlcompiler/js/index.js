@@ -58,7 +58,7 @@ function changeSrc(url, cb) {
     //editor.setValue(d);
     data.source.model.setValue(d);
     //$("#child-frame").attr("srcdoc", "");
-    $("#child-frame").attr("src", "./blank.html");
+    //$("#child-frame").attr("src", "./blank.html");
     if (cb) return cb();
   });
 }
@@ -241,6 +241,7 @@ $(function () {
     // iframe内のコンテンツのdocumentオブジェクト追加
     //$("#child-frame").attr("srcdoc", builder.getNodes());
 
+/*
     var iframehead = document.getElementById("child-frame").contentDocument.head;
     {
     var newElement = document.createElement("script");
@@ -255,6 +256,9 @@ $(function () {
         iframehead.appendChild(newElement);
     }
     //document.getElementById("child-frame").contentDocument.body.innerHTML = builder2.getNodes();
+*/
+document.getElementById("child-frame").contentDocument.innerHTML = builder.getNodes();
+
   }
 
   $("#run").on("click", function (event) {
