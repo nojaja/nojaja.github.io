@@ -240,7 +240,7 @@ $(function () {
     data.html.model.setValue(builder.getNodes());
     // iframe内のコンテンツのdocumentオブジェクト追加
     //$("#child-frame").attr("srcdoc", builder.getNodes());
-    $('#child-frame').contents().html(builder2.getNodes());
+    $('#child-frame').contents().find('body').html(builder2.getNodes());
   }
 
   $("#run").on("click", function (event) {
