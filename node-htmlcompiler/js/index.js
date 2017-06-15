@@ -290,13 +290,18 @@ $(function () {
     compile();
   });
 
-  $(document).keydown(function(e) {
-      switch (e.keyCode) {
-          case 120:
-          //F9 key
-              compile();;
-              break;
+
+  $(window).keydown(function(e) {
+    if(e.keyCode === 120){
+        compile();
+        return false;
       }
+    if(e.ctrlKey){
+      if(e.keyCode === 83){
+        saveDraft(data.source.model.getValue());
+              return false;
+      }
+    }
   });
 
 });
