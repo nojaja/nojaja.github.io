@@ -77,7 +77,7 @@ $("#child-frame").attr("srcdoc", "");
 }
 $(".samples").on("click", function (event) {
   changeSrc($(this).attr("data-url"),function () {
-    $.UIkit.notify("読み込みました", {status:'success',timeout : 1000});
+    $.UIkit.notify("load..", {status:'success',timeout : 1000});
   });
 });
 
