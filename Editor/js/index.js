@@ -131,9 +131,9 @@ $(function () {
     //document.getElementById("child-frame").contentDocument.body.innerHTML = body;
 
     var frame = document.getElementById("child-frame").contentDocument.document;
-    doc.open();
-    doc.write(body);
-    doc.close();
+    frame.open();
+    frame.write(body);
+    frame.close();
 /*
     var iframehead = document.getElementById("child-frame").contentDocument.head;
     {
