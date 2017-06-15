@@ -72,7 +72,6 @@ function changeSrc(url, cb) {
       //$("#child-frame").attr("src", "./blank.html");
       if (cb) return cb();
     });
-  }
 }
 $(".samples").on("click", function (event) {
   changeSrc($(this).attr("data-url"));
