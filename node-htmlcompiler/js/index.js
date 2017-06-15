@@ -270,14 +270,16 @@ $(function () {
     //$("#child-frame").attr("srcdoc", builder.getNodes());
 
     // iframe内のコンテンツを更新
-    $("#child-frame").attr("src", "./blank.html");
-    $("#child-frame").load(function(){
-      var frame = document.getElementById("child-frame").contentDocument;
-      frame.open();
-      frame.write(builder.getNodes());
-      frame.close();
-		});
-
+    //$("#child-frame").attr("srcdoc", "");
+    //$("#child-frame").attr("src", "./blank.html");
+      var frame = document.getElementById("child-frame");
+      frame.src = "./blank.html";
+      frame.onload = function(){
+       alert("読み込み完了");
+         frame.open();
+         frame.write(builder.getNodes());
+         frame.close();
+      }
   }
 
   $("#run").on("click", function (event) {
