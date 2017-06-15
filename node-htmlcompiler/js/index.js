@@ -80,12 +80,16 @@ $(".samples").on("click", function (event) {
 
 function saveDraft(source) {
   // ローカルストレージに最新の状態を保存
-  localStorage.setItem('draft', JSON.stringify(source));
+
+  var name = 'draft'+location.pathname.replace(/\//g, '.');
+
+  localStorage.setItem(name, JSON.stringify(source));
   console.log("draft:" + JSON.stringify(source));
 }
 function localDraft() {
   // ページが読み込まれたら、ローカルストレージから状態を読み込む
-  var source = JSON.parse(localStorage.getItem('draft')) || null;
+  var name = 'draft'+location.pathname.replace(/\//g, '.');
+  var source = JSON.parse(localStorage.getItem(name)) || null;
   console.log("source:" + JSON.stringify(source));
   return source;
 }
@@ -270,23 +274,6 @@ $(function () {
     frame.open();
     frame.write(builder.getNodes());
     frame.close();
-/*
-    var iframehead = document.getElementById("child-frame").contentDocument.head;
-    {
-    var newElement = document.createElement("script");
-        newElement.type = "text/javascript";
-        newElement.innerHTML  = reactRootParser.getResult();
-        iframehead.appendChild(newElement);
-    }
-    {
-    var newElement = document.createElement("script");
-        newElement.type = "text/javascript";
-        newElement.innerHTML  = webComponentParser.getResult();
-        iframehead.appendChild(newElement);
-    }
-    //document.getElementById("child-frame").contentDocument.body.innerHTML = builder2.getNodes();
-*/
-//document.getElementById("child-frame").contentDocument.innerHTML = builder.getNodes();
 
   }
 
