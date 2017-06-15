@@ -55,8 +55,8 @@ function changeSrc(url, cb) {
       var doc = localDraft();
       if (doc){
         data.source.model.setValue(localDraft());
-        $("#child-frame").attr("srcdoc", "");
-        //$("#child-frame").attr("src", "./blank.html");
+        //$("#child-frame").attr("srcdoc", "");
+        $("#child-frame").attr("src", "./blank.html");
         return (cb)?cb():true;
       }else{
         url = $("#test5").attr("data-url");
@@ -270,6 +270,7 @@ $(function () {
     //$("#child-frame").attr("srcdoc", builder.getNodes());
 
     // iframe内のコンテンツを更新
+    $("#child-frame").attr("src", "./blank.html");
     var frame = document.getElementById("child-frame").contentDocument;
     frame.open();
     frame.write(builder.getNodes());
