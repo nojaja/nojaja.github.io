@@ -51,20 +51,40 @@ $("#edittab > li").on("click", function (event) {
 });
 
 function changeSrc(url, cb) {
-  $.ajax({
-    url: url,
-    dataType: "html"
-  }).done(function (d) {
-    //editor.setValue(d);
-    data.source.model.setValue(d);
+  if(url){
+    $.ajax({
+      url: url,
+      dataType: "html"
+    }).done(function (d) {
+      //editor.setValue(d);
+      data.source.model.setValue(d);
+      $("#child-frame").attr("srcdoc", "");
+      //$("#child-frame").attr("src", "./blank.html");
+      if (cb) return cb();
+    });
+  }else{
+    data.source.model.setValue(localDraft());
     $("#child-frame").attr("srcdoc", "");
     //$("#child-frame").attr("src", "./blank.html");
     if (cb) return cb();
-  });
+  }
 }
 $(".samples").on("click", function (event) {
   changeSrc($(this).attr("data-url"));
 });
+
+
+function saveDraft(source) {
+  // ローカルストレージに最新の状態を保存
+  localStorage.setItem('draft', JSON.stringify(source));
+  console.log("draft:" + JSON.stringify(source));
+}
+function localDraft() {
+  // ページが読み込まれたら、ローカルストレージから状態を読み込む
+  var source = JSON.parse(localStorage.getItem('draft')) || null;
+  console.log("source:" + JSON.stringify(source));
+  return source;
+}
 
 var htmlparser = Tautologistics.NodeHtmlParser;
 
@@ -137,6 +157,7 @@ $(function () {
   });
 
   function compile() {
+    saveDraft(data.source);
     var webComponentParser = new WebComponentParser({
       builder: ReactComponentBuilder
     });
@@ -275,6 +296,7 @@ $(function () {
   });
 
 });
+
 
 function stringify(str) {
   var cache = [];
