@@ -280,6 +280,7 @@ $(function () {
       var frame = document.getElementById("child-frame");
       frame.src = "./blank.html";
       frame.onload = function(){
+         frame.onload=function(){};
          frame.contentDocument.open();
          frame.contentDocument.write(builder.getNodes());
          frame.contentDocument.close();
