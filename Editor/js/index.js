@@ -130,7 +130,7 @@ $(function () {
     var body = data.source.model.getValue().trim();
     //document.getElementById("child-frame").contentDocument.body.innerHTML = body;
 
-    var frame = document.getElementById("child-frame").contentDocument.document;
+    var frame = document.getElementById("child-frame").contentDocument;
     frame.open();
     frame.write(body);
     frame.close();
