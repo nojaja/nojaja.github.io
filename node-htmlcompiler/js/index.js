@@ -51,11 +51,15 @@ $("#edittab > li").on("click", function (event) {
 });
 
 function changeSrc(url, cb) {
+$("#child-frame").attr("srcdoc", "");
+//$("#child-frame").attr("src", "./blank.html");
+  var frame = document.getElementById("child-frame");
+  frame.onload = function(){};
+
     if(!url){
       var doc = localDraft();
       if (doc){
         data.source.model.setValue(localDraft());
-        $("#child-frame").attr("srcdoc", "");
         //$("#child-frame").attr("src", "./blank.html");
         return (cb)?cb():true;
       }else{
@@ -68,8 +72,6 @@ function changeSrc(url, cb) {
     }).done(function (d) {
       //editor.setValue(d);
       data.source.model.setValue(d);
-      $("#child-frame").attr("srcdoc", "");
-      //$("#child-frame").attr("src", "./blank.html");
       return (cb)?cb():true;
     });
 }
@@ -275,7 +277,6 @@ $(function () {
       var frame = document.getElementById("child-frame");
       frame.src = "./blank.html";
       frame.onload = function(){
-       alert("読み込み完了");
          frame.contentDocument.open();
          frame.contentDocument.write(builder.getNodes());
          frame.contentDocument.close();
