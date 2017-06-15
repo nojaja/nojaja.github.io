@@ -77,7 +77,7 @@ $("#child-frame").attr("srcdoc", "");
 }
 $(".samples").on("click", function (event) {
   changeSrc($(this).attr("data-url"),function () {
-    UIkit.notify("読み込みました", {status:'success',timeout : 1000});
+    $.UIkit.notify("読み込みました", {status:'success',timeout : 1000});
   });
 });
 
@@ -89,7 +89,7 @@ function saveDraft(source) {
 
   localStorage.setItem(name, JSON.stringify(source));
   console.log("draft:" + JSON.stringify(source));
-  UIkit.notify("save..", {status:'success',timeout : 1000});
+  $.UIkit.notify("save..", {status:'success',timeout : 1000});
 }
 function localDraft() {
   // ページが読み込まれたら、ローカルストレージから状態を読み込む
@@ -283,7 +283,7 @@ $(function () {
          frame.contentDocument.open();
          frame.contentDocument.write(builder.getNodes());
          frame.contentDocument.close();
-         UIkit.notify("compile..", {status:'success',timeout : 1000});
+         $.UIkit.notify("compile..", {status:'success',timeout : 1000});
       }
   }
 
