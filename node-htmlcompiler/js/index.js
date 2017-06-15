@@ -157,7 +157,7 @@ $(function () {
   });
 
   function compile() {
-    saveDraft(data.source.getValue());
+    saveDraft(data.source.model.getValue());
     var webComponentParser = new WebComponentParser({
       builder: ReactComponentBuilder
     });
