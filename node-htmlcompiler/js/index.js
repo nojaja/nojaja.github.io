@@ -161,7 +161,6 @@ $(function () {
   });
 
   function compile() {
-    saveDraft(data.source.model.getValue());
     var webComponentParser = new WebComponentParser({
       builder: ReactComponentBuilder
     });
