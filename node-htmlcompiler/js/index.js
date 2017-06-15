@@ -270,7 +270,7 @@ $(function () {
     //$("#child-frame").attr("srcdoc", builder.getNodes());
 
     // iframe内のコンテンツを更新
-    //$("#child-frame").attr("srcdoc", "");
+    $("#child-frame").attr("srcdoc", "");
     //$("#child-frame").attr("src", "./blank.html");
       var frame = document.getElementById("child-frame");
       frame.src = "./blank.html";
