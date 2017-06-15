@@ -264,6 +264,16 @@ $(function () {
   $("#run").on("click", function (event) {
     compile();
   });
+
+  $(document).keydown(function(e) {
+      switch (e.keyCode) {
+          case 120:
+          //F9 key
+              compile();;
+              break;
+      }
+  });
+
 });
 
 function stringify(str) {

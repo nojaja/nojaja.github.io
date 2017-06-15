@@ -48,6 +48,7 @@ function changeSrc(url,cb) {
     //editor.setValue(d);
     data.source.model.setValue(d);
     $("#child-frame").attr("srcdoc","");
+    //$("#child-frame").attr("src", "./blank.html");
     if(cb) return cb();
   });
 }
@@ -120,6 +121,7 @@ $(function() {
     });
 
     var builder = new HtmlBuilder({});
+    var builder2 = new HtmlBuilder({});
     var debugBuilder = new DebugBuilder({});
     var cssbuilder = new CSSBuilder({});
     var reactComponentBuilder = new ReactComponentBuilder({});
@@ -128,6 +130,7 @@ $(function() {
       {}
     );
     var compiler2 = new Compiler([builder], {});
+    var compiler3 = new Compiler([builder2], {});
 
     //-ここからDemo用処理----------------------------------
     var parseData = parseHtml(data.source.model.getValue().trim());
@@ -228,15 +231,43 @@ $(function() {
       }
     }, this);
     compiler2.compile(parseData.children); //jsonオブジェクトを各種コードに変換します
+    compiler3.compile(bodyElements[0].children); //jsonオブジェクトを各種コードに変換します
     data.html.model.setValue(builder.getNodes());
     // iframe内のコンテンツのdocumentオブジェクト追加
     $("#child-frame").attr("srcdoc", builder.getNodes());
+
+/*
+    var iframehead = document.getElementById("child-frame").contentDocument.head;
+    {
+    var newElement = document.createElement("script");
+        newElement.type = "text/javascript";
+        newElement.innerHTML  = reactRootParser.getResult();
+        iframehead.appendChild(newElement);
+    }
+    {
+    var newElement = document.createElement("script");
+        newElement.type = "text/javascript";
+        newElement.innerHTML  = webComponentParser.getResult();
+        iframehead.appendChild(newElement);
+    }
+    //document.getElementById("child-frame").contentDocument.body.innerHTML = builder2.getNodes();
+*/
+//document.getElementById("child-frame").contentDocument.innerHTML = builder.getNodes();
+
   }
 
   $("#run").on("click", function(event) {
     compile();
   });
   
+  $(document).keydown(function(e) {
+      switch (e.keyCode) {
+          case 120:
+          //F9 key
+              compile();;
+              break;
+      }
+  });
   
 });
 
