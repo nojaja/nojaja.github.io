@@ -170,13 +170,13 @@ $(function () {
     });
 
     var builder = new HtmlBuilder({});
-    var builder2 = new HtmlBuilder({});
+    //var builder2 = new HtmlBuilder({});
     var debugBuilder = new DebugBuilder({});
     var cssbuilder = new CSSBuilder({});
     var reactComponentBuilder = new ReactComponentBuilder({});
     var compiler1 = new Compiler([cssbuilder, webComponentParser, reactRootParser], {});
     var compiler2 = new Compiler([builder], {});
-    var compiler3 = new Compiler([builder2], {});
+    //var compiler3 = new Compiler([builder2], {});
 
     //-ここからDemo用処理----------------------------------
     var parseData = parseHtml(data.source.model.getValue().trim());
@@ -260,11 +260,16 @@ $(function () {
       }
     }, this);
     compiler2.compile(parseData.children); //jsonオブジェクトを各種コードに変換します
-    compiler3.compile(bodyElements[0].children); //jsonオブジェクトを各種コードに変換します
+    //compiler3.compile(bodyElements[0].children); //jsonオブジェクトを各種コードに変換します
     data.html.model.setValue(builder.getNodes());
     // iframe内のコンテンツのdocumentオブジェクト追加
-    $("#child-frame").attr("srcdoc", builder.getNodes());
+    //$("#child-frame").attr("srcdoc", builder.getNodes());
 
+    // iframe内のコンテンツを更新
+    var frame = document.getElementById("child-frame").contentDocument;
+    frame.open();
+    frame.write(builder.getNodes());
+    frame.close();
 /*
     var iframehead = document.getElementById("child-frame").contentDocument.head;
     {
