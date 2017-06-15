@@ -57,7 +57,7 @@ function changeSrc(url, cb) {
         data.source.model.setValue(localDraft());
         $("#child-frame").attr("srcdoc", "");
         //$("#child-frame").attr("src", "./blank.html");
-        return (cb)?cb();
+        return (cb)?cb():true;
       }else{
         url = $("#test5").attr("data-url");
       }
@@ -70,7 +70,7 @@ function changeSrc(url, cb) {
       data.source.model.setValue(d);
       $("#child-frame").attr("srcdoc", "");
       //$("#child-frame").attr("src", "./blank.html");
-      return (cb)?cb();
+      return (cb)?cb():true;
     });
 }
 $(".samples").on("click", function (event) {
