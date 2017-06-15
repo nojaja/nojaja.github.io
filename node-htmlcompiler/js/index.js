@@ -55,8 +55,8 @@ function changeSrc(url, cb) {
       var doc = localDraft();
       if (doc){
         data.source.model.setValue(localDraft());
-        //$("#child-frame").attr("srcdoc", "");
-        $("#child-frame").attr("src", "./blank.html");
+        $("#child-frame").attr("srcdoc", "");
+        //$("#child-frame").attr("src", "./blank.html");
         return (cb)?cb():true;
       }else{
         url = $("#test5").attr("data-url");
@@ -68,8 +68,8 @@ function changeSrc(url, cb) {
     }).done(function (d) {
       //editor.setValue(d);
       data.source.model.setValue(d);
-      //$("#child-frame").attr("srcdoc", "");
-      $("#child-frame").attr("src", "./blank.html");
+      $("#child-frame").attr("srcdoc", "");
+      //$("#child-frame").attr("src", "./blank.html");
       return (cb)?cb():true;
     });
 }
@@ -277,7 +277,7 @@ $(function () {
       frame.write(builder.getNodes());
       frame.close();
 		});
-    
+
   }
 
   $("#run").on("click", function (event) {
