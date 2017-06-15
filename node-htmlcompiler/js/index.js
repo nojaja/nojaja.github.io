@@ -51,7 +51,17 @@ $("#edittab > li").on("click", function (event) {
 });
 
 function changeSrc(url, cb) {
-  if(url){
+    if(!url){
+      var doc = localDraft();
+      if (doc){
+        data.source.model.setValue(localDraft());
+        $("#child-frame").attr("srcdoc", "");
+        //$("#child-frame").attr("src", "./blank.html");
+        if (cb) return cb();
+      }else{
+        url = $("#test5").attr("data-url");
+      }
+    }
     $.ajax({
       url: url,
       dataType: "html"
@@ -62,11 +72,6 @@ function changeSrc(url, cb) {
       //$("#child-frame").attr("src", "./blank.html");
       if (cb) return cb();
     });
-  }else{
-    data.source.model.setValue(localDraft());
-    $("#child-frame").attr("srcdoc", "");
-    //$("#child-frame").attr("src", "./blank.html");
-    if (cb) return cb();
   }
 }
 $(".samples").on("click", function (event) {
@@ -150,7 +155,7 @@ $(function () {
       automaticLayout: true,
       model: data.source.model
     });
-    var url = arg["q"] ? arg["q"] : $("#test5").attr("data-url");
+    var url = arg["q"] ? arg["q"] : "";
     changeSrc(url, function () {
       compile();
     });
