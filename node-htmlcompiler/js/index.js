@@ -68,8 +68,8 @@ function changeSrc(url, cb) {
     }).done(function (d) {
       //editor.setValue(d);
       data.source.model.setValue(d);
-      $("#child-frame").attr("srcdoc", "");
-      //$("#child-frame").attr("src", "./blank.html");
+      //$("#child-frame").attr("srcdoc", "");
+      $("#child-frame").attr("src", "./blank.html");
       return (cb)?cb():true;
     });
 }
@@ -271,11 +271,13 @@ $(function () {
 
     // iframe内のコンテンツを更新
     $("#child-frame").attr("src", "./blank.html");
-    var frame = document.getElementById("child-frame").contentDocument;
-    frame.open();
-    frame.write(builder.getNodes());
-    frame.close();
-
+    $("#child-frame").load(function(){
+      var frame = document.getElementById("child-frame").contentDocument;
+      frame.open();
+      frame.write(builder.getNodes());
+      frame.close();
+		});
+    
   }
 
   $("#run").on("click", function (event) {
