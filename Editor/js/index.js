@@ -128,9 +128,12 @@ $(function () {
 
     //-ここからDemo用処理----------------------------------
     var body = data.source.model.getValue().trim();
-    document.getElementById("child-frame").contentDocument.body.innerHTML = body;
+    //document.getElementById("child-frame").contentDocument.body.innerHTML = body;
 
-
+    var frame = document.getElementById("child-frame").contentDocument.document;
+    doc.open();
+    doc.write(body);
+    doc.close();
 /*
     var iframehead = document.getElementById("child-frame").contentDocument.head;
     {
