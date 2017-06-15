@@ -1,0 +1,12 @@
+.editor {
+  width: 100%;
+  height: 1200px;
+}
+.tm-navbar {
+    padding: 15px 0;
+    border: none;
+    background: #000;
+}
+.tm-navbar {
+    position: relative;
+}
