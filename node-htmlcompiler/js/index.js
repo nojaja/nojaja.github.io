@@ -213,14 +213,14 @@ $(function () {
       var addpoint = headElement.getElementsByTagName("script")[0];
       {
         var newElement = headElement.createElement("script");
-        var child = newElement.createTextNode(reactRootParser.getResult());
+        var child = newElement.createTextNode(reactRootParser.getResult()+"\n//# sourceURL=app.js");
         newElement.appendChild(child);
         headElement.insertBefore(newElement, addpoint);
         addpoint = newElement;
       }
       {
         var newElement = headElement.createElement("script");
-        var child = newElement.createTextNode(webComponentParser.getResult());
+        var child = newElement.createTextNode(webComponentParser.getResult()+"\n//# sourceURL=Component.js");
         newElement.appendChild(child);
         headElement.insertBefore(newElement, addpoint);
         addpoint = newElement;
