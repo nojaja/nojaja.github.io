@@ -152,7 +152,7 @@ $(function () {
       vs: "/lib/monaco-editor/min/vs"
     }
   });
-  require(["/lib/monaco-editor/min/vs/editor/editor.main"], function () {
+  require(["vs/editor/editor.main"], function () {
     data.source.model = monaco.editor.createModel("", "html");
     data.dom.model = monaco.editor.createModel("", "json");
     data.component.model = monaco.editor.createModel("", "javascript");
