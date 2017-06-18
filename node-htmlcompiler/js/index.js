@@ -154,7 +154,7 @@ var editorContainer = document.getElementById("container");
 $(function () {
   require.config({
     paths: {
-      vs: "/node_modules/monaco-editor/min/vs"
+      vs: "node_modules/monaco-editor/min/vs"
     }
   });
   require(["vs/editor/editor.main"], function () {
