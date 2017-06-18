@@ -149,10 +149,10 @@ var editorContainer = document.getElementById("container");
 $(function () {
   require.config({
     paths: {
-      vs: "//microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs"
+      vs: "/lib/monaco-editor/min/vs"
     }
   });
-  require(["vs/editor/editor.main"], function () {
+  require(["/lib/monaco-editor/min/vs/editor/editor.main"], function () {
     data.source.model = monaco.editor.createModel("", "html");
     data.dom.model = monaco.editor.createModel("", "json");
     data.component.model = monaco.editor.createModel("", "javascript");

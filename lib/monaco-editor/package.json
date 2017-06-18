@@ -1,0 +1,44 @@
+{
+  "name": "monaco-editor",
+  "private": false,
+  "version": "0.8.3",
+  "description": "A browser based code editor",
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "license": "MIT",
+  "scripts": {
+    "simpleserver": "gulp simpleserver",
+    "release": "gulp release",
+    "website": "gulp website"
+  },
+  "typings": "./monaco.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/monaco-editor"
+  },
+  "devDependencies": {
+    "clean-css": "^3.4.20",
+    "event-stream": "^3.3.2",
+    "gulp": "^3.9.1",
+    "gulp-typedoc": "^2.0.0",
+    "http-server": "^0.9.0",
+    "monaco-css": "1.3.1",
+    "monaco-editor-core": "0.8.2",
+    "monaco-html": "1.2.1",
+    "monaco-json": "1.2.2",
+    "monaco-languages": "0.7.0",
+    "monaco-typescript": "2.1.2",
+    "rimraf": "^2.5.2",
+    "typedoc": "^0.5.0",
+    "uncss": "^0.14.1"
+  },
+  "readme": "# Monaco Editor\r\n\r\n[Demo page](https://microsoft.github.io/monaco-editor/)\r\n\r\nThe Monaco Editor is the code editor that powers [VS Code](https://github.com/Microsoft/vscode), a good page describing the code editor's features is [here](https://code.visualstudio.com/docs/editor/editingevolved).\r\n\r\n![image](https://cloud.githubusercontent.com/assets/5047891/19600675/5eaae9e6-97a6-11e6-97ad-93903167d8ba.png)\r\n\r\n## Try it out\r\n\r\nSee the editor in action [here](https://microsoft.github.io/monaco-editor/index.html).\r\n\r\nLearn how to extend the editor and try out your own customizations in the [playground](https://microsoft.github.io/monaco-editor/playground.html).\r\n\r\nBrowse the latest editor API at [`monaco.d.ts`](https://github.com/Microsoft/monaco-editor/blob/master/website/playground/monaco.d.ts.txt).\r\n\r\n## Issues\r\n\r\nPlease mention the version of the editor when creating issues and the browser you're having trouble in. Create issues in this repository.\r\n\r\n## Known issues\r\nIn IE, the editor must be completely surrounded in the body element, otherwise the hit testing we do for mouse operations does not work. You can inspect this using F12 and clicking on the body element and confirm that visually it surrounds the editor.\r\n\r\n## Installing\r\n\r\n```\r\nnpm install monaco-editor\r\n```\r\n\r\nYou will get:\r\n* inside `dev`: bundled, not minified\r\n* inside `min`: bundled, and minified\r\n* inside `min-maps`: source maps for `min`\r\n* `monaco.d.ts`: this specifies the API of the editor (this is what is actually versioned, everything else is considered private and might break with any release).\r\n\r\nIt is recommended to develop against the `dev` version, and in production to use the `min` version.\r\n\r\n## Integrate\r\n\r\nHere is the most basic HTML page that embeds the editor. More samples are available at [monaco-editor-samples](https://github.com/Microsoft/monaco-editor-samples).\r\n\r\n```html\r\n<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\r\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" >\r\n</head>\r\n<body>\r\n\r\n<div id=\"container\" style=\"width:800px;height:600px;border:1px solid grey\"></div>\r\n\r\n<script src=\"monaco-editor/min/vs/loader.js\"></script>\r\n<script>\r\n\trequire.config({ paths: { 'vs': 'monaco-editor/min/vs' }});\r\n\trequire(['vs/editor/editor.main'], function() {\r\n\t\tvar editor = monaco.editor.create(document.getElementById('container'), {\r\n\t\t\tvalue: [\r\n\t\t\t\t'function x() {',\r\n\t\t\t\t'\\tconsole.log(\"Hello world!\");',\r\n\t\t\t\t'}'\r\n\t\t\t].join('\\n'),\r\n\t\t\tlanguage: 'javascript'\r\n\t\t});\r\n\t});\r\n</script>\r\n</body>\r\n</html>\r\n```\r\n\r\n## Integrate cross domain\r\n\r\nIf you are hosting your `.js` on a different domain (e.g. on a CDN) than the HTML, you should know that the Monaco Editor creates web workers for smart language features. Cross-domain web workers are not allowed, but here is how you can proxy their loading and get them to work:\r\n\r\n```html\r\n<!--\r\n\tAssuming the HTML lives on www.mydomain.com and that the editor is hosted on www.mycdn.com\r\n-->\r\n<script type=\"text/javascript\" src=\"http://www.mycdn.com/monaco-editor/min/vs/loader.js\"></script>\r\n<script>\r\n\trequire.config({ paths: { 'vs': 'http://www.mycdn.com/monaco-editor/min/vs' }});\r\n\r\n\t// Before loading vs/editor/editor.main, define a global MonacoEnvironment that overwrites\r\n\t// the default worker url location (used when creating WebWorkers). The problem here is that\r\n\t// HTML5 does not allow cross-domain web workers, so we need to proxy the instantion of\r\n\t// a web worker through a same-domain script\r\n\twindow.MonacoEnvironment = {\r\n\t\tgetWorkerUrl: function(workerId, label) {\r\n\t\t\treturn 'monaco-editor-worker-loader-proxy.js';\r\n\t\t}\r\n\t};\r\n\r\n\trequire([\"vs/editor/editor.main\"], function () {\r\n\t\t// ...\r\n\t});\r\n</script>\r\n\r\n<!--\r\n\tCreate http://www.mydomain.com/monaco-editor-worker-loader-proxy.js with the following content:\r\n\t\tself.MonacoEnvironment = {\r\n\t\t\tbaseUrl: 'http://www.mycdn.com/monaco-editor/min/'\r\n\t\t};\r\n\t\timportScripts('www.mycdn.com/monaco-editor/min/vs/base/worker/workerMain.js');\r\n\tThat's it. You're good to go! :)\r\n-->\r\n```\r\n\r\n# More documentation\r\n\r\nFind full HTML samples [here](https://github.com/Microsoft/monaco-editor-samples).\r\n\r\nCreate a Monarch tokenizer [here](https://microsoft.github.io/monaco-editor/monarch.html).\r\n![image](https://cloud.githubusercontent.com/assets/5047891/16143041/840ced64-346a-11e6-98f3-3c68bf61884a.png)\r\n\r\n## FAQ\r\n\r\n❓ **What is the relationship between VS Code and the Monaco Editor?**\r\n\r\nThe Monaco Editor is generated straight from VS Code's sources with some shims around services the code needs to make it run in a web browser outside of its home.\r\n\r\n❓ **What is the relationship between VS Code's version and the Monaco Editor's version?**\r\n\r\nNone. The Monaco Editor is a library and it reflects directly the source code.\r\n\r\n❓ **I've written an extension for VS Code, will it work on the Monaco Editor in a browser?**\r\n\r\nNo.\r\n\r\n❓ **Why all these web workers and why should I care?**\r\n\r\nLanguage services create web workers to compute heavy stuff outside the UI thread. They cost hardly anything in terms of resource overhead and you shouldn't worry too much about them, as long as you get them to work (see above the cross-domain case).\r\n\r\n❓ **What is this `loader.js`? Can I use `require.js`?**\r\n\r\nIt is an AMD loader that we use in VS Code. Yes.\r\n\r\n❓ **I see the warning \"Could not create web worker\". What should I do?**\r\n\r\nHTML5 does not allow pages loaded on `file://` to create web workers. Please load the editor with a web server on `http://` or `https://` schemes. Please also see the cross domain case above.\r\n\r\n❓ **Is the editor supported in mobile browsers or mobile web app frameworks?**\r\n\r\nNo.\r\n\r\n❓ **Why doesn't the editor support TextMate grammars?**\r\n\r\n* all the regular expressions in TM grammars are based on [oniguruma](https://github.com/kkos/oniguruma), a regular expression library written in C.\r\n* the only way to interpret the grammars and get anywhere near original fidelity is to use the exact same regular expression library (with its custom syntax constructs)\r\n* in VSCode, our runtime is node.js and we can use a node native module that exposes the library to JavaScript\r\n* in Monaco, we are constrained to a browser environment where we cannot do anything similar\r\n* we have experimented with Emscripten to compile the C library to asm.js, but performance was very poor even in Firefox (10x slower) and extremely poor in Chrome (100x slower).\r\n* we can revisit this once WebAssembly gets traction in the major browsers, but we will still need to consider the browser matrix we support. i.e. if we support IE11 and only Edge will add WebAssembly support, what will the experience be in IE11, etc.\r\n\r\n## Development setup\r\n\r\nPlease see [CONTRIBUTING](./CONTRIBUTING.md)\r\n\r\n## Code of Conduct\r\n\r\nThis project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.\r\n\r\n\r\n## License\r\n[MIT](https://github.com/Microsoft/monaco-editor/blob/master/LICENSE.md)\r\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/Microsoft/monaco-editor/issues"
+  },
+  "homepage": "https://github.com/Microsoft/monaco-editor",
+  "_id": "monaco-editor@0.8.3",
+  "_from": "monaco-editor@0.8.3"
+}
