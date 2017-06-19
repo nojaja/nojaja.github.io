@@ -1,147 +1,152 @@
 <!DOCTYPE html>
-    <html lang="ja">
+<html lang="ja">
 
-    <head>
+<head>
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://apis.google.com/js/client.js"></script>
-        <script>
-            var googleDriveClient;
-            getGoogleAuth().then(loadGoogleDrive).then(function(gClient){
-                googleDriveClient = gClient;
-            });
-
-            // google driveÇÃÉNÉâÉCÉAÉìÉgÇÃê∂ê¨
-            function loadGoogleDrive() {
-                var p = new Promise(function(resolve, reject) {
-                    try {
-                        window.gapi.client.load('drive', 'v3', fncOnDriveApiLoad);
-                    } catch (e) {
-                        reject(e);
-                    }
-                    function fncOnDriveApiLoad() {
-                        resolve(window.gapi.client);
-                    }
-                });
-                return p;
-            }
-
-            // GoogleîFèÿ
-            function getGoogleAuth() {
-                var objAuthParam = {
-                    // ÉNÉâÉCÉAÉìÉgIDÇÕGoogle API consoleÇ≈éÊìæÇµÇƒÇ≠ÇæÇ≥Ç¢
-                    'client_id': '531841447915-ur7r5bil70c1udefk2os1qnpt7r8b0dn.apps.googleusercontent.com',
-                    'scope': ['https://www.googleapis.com/auth/drive'],
-                    'immediate': false
-                };
-                var p = new Promise(function(resolve, reject) {
-                    window.gapi.load('auth', {
-                        'callback': function () {
-                            window.gapi.auth.authorize(
-                                objAuthParam,
-                                authResult);
-                        }
-                    });
-                    function authResult(objAuthResult) {
-                        if (objAuthResult && !objAuthResult.error) {
-                            resolve(objAuthResult.access_token);
-                        } else {
-                            // auth failed.
-                            reject(objAuthResult);
-                        }
-                    }
-                });
-                return p;
-            }
-
-            // ÉtÉ@ÉCÉãÉAÉbÉvÉçÅ[Éh
-            function uploadFile(gClient, base64FileData, fileName, fileType) {
-                // å≈íËï∂
-                const boundary = '-------314159265358979323846';
-                const delimiter = '\r\n--' + boundary + '\r\n';
-                const closeDelim = '\r\n--' + boundary + '--';
-                const contentType = fileType;
-
-                // ÉAÉbÉvÉçÅ[ÉhêÊÇÃÉtÉHÉãÉ_éwíËÇ»Ç«
-                var metadata = {
-                    'name': fileName,
-                    'mimeType': contentType
-                };
-                var multipartRequestBody =
-                    delimiter +
-                    'content-type: application/json; charset=UTF-8\r\n\r\n' +
-                    JSON.stringify(metadata) +
-                    delimiter +
-                    'content-transfer-encoding: base64\r\n' +
-                    'content-type: ' + contentType + '\r\n\r\n' +
-                    base64FileData +
-                    closeDelim;
-                var request = gClient.request({
-                    'path': '/upload/drive/v3/files',
-                    'method': 'POST',
-                    'params': {
-                        'uploadType': 'multipart'
-                    },
-                    'headers': {
-                        'Content-Type': 'multipart/related; boundary="' + boundary + '"'
-                    },
-                    'body': multipartRequestBody
-                });
-                try {
-                    request.execute(function (objFile) {
-                        console.log(objFile);
-                        console.info('upload success !');
-                    });
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-
-            // ÉhÉçÉbÉvÉ]Å[ÉìÇ…ÉhÉâÉbÉOÇµÇƒÇ¢ÇÈéûÇÃÉCÉxÉìÉg
-            function dragOver(event) {
-                event.preventDefault();
-            }
-
-            // ÉhÉçÉbÉvÇµÇΩéûÇÃÉCÉxÉìÉg
-            function drop(event) {
-                if (event.dataTransfer && event.dataTransfer.files instanceof FileList && event.dataTransfer.files.length > 0) {
-                    // ÉTÉìÉvÉãÇ∆ÇµÇƒ1ÉtÉ@ÉCÉãÇÃÇ›Ç∆Ç∑ÇÈ
-                    var file = event.dataTransfer.files[0];
-                    var reader = new FileReader();
-                    // ÉoÉCÉiÉäÉtÉ@ÉCÉãÇbase64Ç…ïœä∑
-                    reader.readAsDataURL(file);
-                    reader.onload = function(e) {
-                        var arraySplitBase64 = '';
-                        if (typeof reader.result === 'string') {
-                            // base64ÉfÅ[É^ÇÃÉfÅ[É^ñ{ïîÇíäèo
-                            arraySplitBase64 = reader.result.split(',');
-                            // file upload
-                            uploadFile(googleDriveClient, arraySplitBase64[1], file.name, file.type);
-                        } else {
-                            throw 'read file error';
-                        }
-                    };
-                }
-                event.preventDefault();
-            }
-        </script>
-        <style>
-            .drop-zone {
-                width: 90%;
-                height: 500px;
-                display: block;
-                margin: 0 auto;
-                border: 1px dotted;
-                background: #afeeee;
-            }
-        </style>
 </head>
 
 <body>
-    <div class="drop-zone" ondragover="dragOver(event);" ondrop="drop(event);">
-        <h1 style="opacity: 0.5; text-align: center; ">Drop local file to here.</h1>
-    </div>
+<script type="text/javascript">
+    var CLIENT_ID = '531841447915-ur7r5bil70c1udefk2os1qnpt7r8b0dn.apps.googleusercontent.com';
+    var SCOPES = 'https://www.googleapis.com/auth/drive';
+
+    /**
+     * Called when the client library is loaded to start the auth flow.
+     */
+    function handleClientLoad() {
+        window.setTimeout(checkAuth, 1);
+    }
+
+    /**
+     * Check if the current user has authorized the application.
+     */
+    function checkAuth() {
+        gapi.auth.authorize({
+            'client_id': CLIENT_ID,
+            'scope': SCOPES,
+            'immediate': true
+        },
+        handleAuthResult);
+    }
+
+    /**
+     * Called when authorization server replies.
+     *
+     * @param {Object} authResult Authorization result.
+     */
+    function handleAuthResult(authResult) {
+        var authButton = document.getElementById('authorizeButton');
+        var main = document.getElementById('main');
+        authButton.style.display = 'none';
+        main.style.display = 'none';
+        if(authResult && !authResult.error) {
+            // Access token has been successfully retrieved, requests can be sent to the API.
+            main.style.display = 'block';
+            var btn = document.getElementById('saveBtn');
+            btn.onclick = writeFile;
+            //main.onchange = uploadFile;
+        } else {
+            // No access token could be retrieved, show the button to start the authorization flow.
+            authButton.style.display = 'block';
+            authButton.onclick = function () {
+                gapi.auth.authorize({
+                    'client_id': CLIENT_ID,
+                    'scope': SCOPES,
+                    'immediate': false
+                },
+                handleAuthResult);
+            };
+        }
+    }
+
+    /**
+     * Start the file upload.
+     *
+     * @param {Object} evt Arguments from the file selector.
+     */
+    function writeFile(evt) {
+        gapi.client.load('drive', 'v2', function () {
+            //var file = evt.target.files[0];
+            var fileName = document.getElementById("fileName").value;
+            var content = document.getElementById("content").value;
+            console.log("fileName = "+fileName);
+            console.log("content = "+content);
+            insertFile(fileName,content);
+        });
+    }
+
+    /**
+     * Insert new file.
+     *
+     * @param {fileName} ‰øùÂ≠ò„Åô„Çã„Éï„Ç°„Ç§„É´Âêç
+     * @param {content} ‰øùÂ≠ò„Åô„Çã„Éï„Ç°„Ç§„É´„ÅÆÂÜÖÂÆπ
+     * @param {Function} callback Function to call when the request is complete.
+     */
+    function insertFile(fileName,content, callback) {
+        const boundary = '-------314159265358979323846';
+        const delimiter = "\r\n--" + boundary + "\r\n";
+        const close_delim = "\r\n--" + boundary + "--";
+
+        var contentType = 'text/plain';
+        var metadata = {
+                'title': fileName,
+                'mimeType': contentType
+        };
+
+        var base64Data = utf8_to_b64(content);
+        var multipartRequestBody = delimiter +
+                'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) + delimiter +
+                'Content-Type: ' + contentType + '\r\n' +
+                'Content-Transfer-Encoding: base64\r\n' +
+                '\r\n' + base64Data + close_delim;
+
+        var request = gapi.client.request({
+                'path': '/upload/drive/v2/files',
+                'method': 'POST',
+                'params': {
+                    'uploadType': 'multipart'
+                 },
+                'headers': {
+                    'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+                },
+                'body': multipartRequestBody
+        });
+        if(!callback) {
+          callback = function (file) {
+              alert("‰øùÂ≠ò„Åó„Åæ„Åó„Åü„ÄÇ");
+              console.log(file)
+          };
+        }
+        request.execute(callback);
+
+    }
+
+    // from http://ecmanaut.blogspot.jp/2006/07/encoding-decoding-utf8-in-javascript.html
+    function utf8_to_b64(str) {
+  return window.btoa( unescape(encodeURIComponent( str )) );
+}
+
+</script>
+<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+<!--Add a file picker for the user to start the upload process -->
+<div id="main" style="display: none">
+<p>
+<label>„Éï„Ç°„Ç§„É´Âêç</label>
+<input type="text" id="fileName">
+</p>
+<p>
+<label>ÂÜÖÂÆπ</label>
+<textarea id="content" cols="50" rows="5"></textarea>
+</p>
+<p>
+    <button id="saveBtn">
+        ‰øùÂ≠ò
+    </button>
+</p>
+<input type="button" id="authorizeButton" style="display: none" value="Authorize" />
+</div>
 </body>
 
 </html>
