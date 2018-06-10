@@ -1,13 +1,122 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+	<title>
+		Profile
+	</title>
+	<meta charset='UTF-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+	<link rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css' />
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto' />
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' />
+	<style>
+		
+html,body,h1,h2,h3,h4,h5,h6 
+		{font-family: "Roboto", sans-serif}
+	</style>
+	<head>
+		<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<script src='https://unpkg.com/react@16/umd/react.development.js'></script>
+		<script src='https://unpkg.com/react-dom@16/umd/react-dom.development.js'></script>
+		<script>
+			
+//# sourceURL=Component.js
+		</script>
+		<script>
+			
+class App extends React.Component{
+  render(){
+    return React.createElement('div',null,
+	/*  Page Container  */
+	React.createElement('div',{ 'className':'w3-content w3-margin-top','style':{"maxwidth":"1400px"}},
+		/*  The Grid  */
+		React.createElement('div',{ 'className':'w3-row-padding'},
+			/*  Left Column  */
+			React.createElement('div',{ 'className':'w3-third'},
+				React.createElement('div',{ 'className':'w3-white w3-text-grey w3-card-4'},
+					React.createElement('div',{ 'className':'w3-display-container'},
+						React.createElement('img',{ 'src':'https://avatars2.githubusercontent.com/u/22561104?s=460&v=4','style':{"width":"100%"},'alt':'Avatar'}),
+						React.createElement('div',{ 'className':'w3-display-bottomleft w3-container w3-text-black'},
+							React.createElement('h2',null,
+								'nojaja'
+							)
+						)
+					),
+					React.createElement('div',{ 'className':'w3-container'},
+						React.createElement('p',null,
+							React.createElement('i',{ 'className':'fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal'}),
+							'java屋さん'
+						),
+						React.createElement('p',null,
+							React.createElement('i',{ 'className':'fa fa-home fa-fw w3-margin-right w3-large w3-text-teal'}),
+							'Tokyo, Japan'
+						),
+						React.createElement('p',null,
+							React.createElement('i',{ 'className':'fa fa-twitter fa-fw w3-margin-right w3-large w3-text-teal'}),
+							'@nojaja'
+						)
+					)
+				),
+				React.createElement('br',null)
+				/*  End Left Column  */
+			),
+			/*  Right Column  */
+			React.createElement('div',{ 'className':'w3-twothird'},
+				React.createElement('div',{ 'className':'w3-container w3-card-2 w3-white w3-margin-bottom'},
+					React.createElement('h2',{ 'className':'w3-text-grey w3-padding-16'},
+						React.createElement('i',{ 'className':'fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal'}),
+						'作ったもの'
+					),
+					React.createElement('div',{ 'className':'w3-container'},
+						React.createElement('h5',{ 'className':'w3-opacity'},
+							React.createElement('b',null,
+								React.createElement('a',{ 'href':'./SiteEditor/'},
+									'WebsiteEditor'
+								)
+							)
+						),
+						React.createElement('p',null,
+							'workerserviceを利用したWebページEditor、ShareGistで自分のGISTに保存できます。'
+						),
+						React.createElement('hr',null)
+					)
+				)
+				/*  End Right Column  */
+			)
+			/*  End Grid  */
+		)
+		/*  End Page Container  */
+	),
+	React.createElement('footer',{ 'className':'w3-container w3-teal w3-center w3-margin-top'},
+		React.createElement('p',null,
+			'Powered by ',
+			React.createElement('a',{ 'href':'https://www.w3schools.com/w3css/default.asp','target':'_blank'},
+				'w3.css'
+			)
+		)
+	)
+)
+  }
 
-<a href="./SiteEditor/">WebsiteEditor</a><br />
-<a href="./node-htmlcompiler/">test</a>
+};
+//# sourceURL=app.js
+		</script>
+	</head>
+	<body class='w3-light-grey'>
+		<div id='app' />
+		<script>
+			
+ var render = function render() {
+  ReactDOM.render(
+    React.createElement(App, null),
+    document.querySelector("#app")
+  );
+};
 
-<script>
+$(function() {
+  render();
+});
+		</script>
+    <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -17,5 +126,5 @@
   ga('send', 'pageview');
 
 </script>
-</body>
+	</body>
 </html>
