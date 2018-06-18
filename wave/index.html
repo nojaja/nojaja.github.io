@@ -1,0 +1,365 @@
+<html>
+<head>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.6/wavesurfer.min.js"></script>
+<script>
+
+</script>
+<style>
+body {
+  background: #1e1e21;
+}
+
+.button {
+  background: #cfcfcf;
+  border-radius: 4px;
+  cursor: pointer;
+  width: calc(600px / 10 - 10px);
+  height: calc(600px / 10 - 10px);
+  margin: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  transition: background 100ms ease;
+}
+
+.button.on {
+  background: #cf0000 !important;
+  box-shadow: 0 0 12px 0 rgba(190, 0, 0, 0.8);
+}
+
+.button.active {
+  background: #ef0000 !important;
+  box-shadow: 0 0 12px 0 rgba(255, 0, 0, 0.8);
+}
+
+.flex-pattern {
+  display: flex;
+  flex-direction: row;
+}
+.beats {
+  box-sizing: border-radius;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.beats .beat {
+  background: #cfcfcf;
+  border-radius: 4px;
+  cursor: pointer;
+  width: calc(400px / 10 - 10px);
+  height: calc(600px / 10 - 10px);
+  margin: 5px;
+  box-shadow: 0 1px 3px 0 rgba(255, 255, 255, 0.3);
+  transition: background 100ms ease;
+}
+.beats .beat.active {
+  background: #0087ff !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+.beats .beat.on {
+  background: #ffffff !important;
+  box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.8);
+}
+
+.flex {
+  background: #26262c;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+}
+.pads {
+  box-sizing: border-radius;
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: wrap;
+}
+.pads .pad {
+  background: #36363c;
+  border-radius: 4px;
+  cursor: pointer;
+  width: calc(600px / 10 - 10px);
+  height: calc(600px / 10 - 10px);
+  margin: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  transition: background 100ms ease;
+}
+.pads .pad:hover {
+  background: #42424a;
+}
+.pads .pad.active {
+  background: #42424a;
+}
+
+.pads .pad.blue.on {
+  background: #0067df !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+
+.pads .pad.blue.on:hover {
+  background: #0087ff !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+
+.pads .pad.blue.on.active {
+  background: #0087ff !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+
+.pads .pad.green.on {
+  background: #BEFFEB !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+
+.pads .pad.green.on:hover {
+  background: #DDFFF3 !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+
+.pads .pad.green.on.active {
+  background: #DDFFF3 !important;
+  box-shadow: 0 0 12px 0 rgba(0, 135, 255, 0.8);
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="flex-pattern">
+  <div class="beats">
+    <div class="beat beat_1" data-step='1'></div>
+    <div class="beat beat_2" data-step='2'></div>
+    <div class="beat beat_3" data-step='3'></div>
+    <div class="beat beat_4" data-step='4'></div>
+    <div class="beat beat_5" data-step='5'></div>
+    <div class="beat beat_6" data-step='6'></div>
+    <div class="beat beat_7" data-step='7'></div>
+    <div class="beat beat_8" data-step='8'></div>
+  </div>
+</div>
+<div class="flex-pattern">
+  <div class="beats">
+    <div class="beat beat_9" data-step='9'></div>
+    <div class="beat beat_10" data-step='10'></div>
+    <div class="beat beat_11" data-step='11'></div>
+    <div class="beat beat_12" data-step='12'></div>
+    <div class="beat beat_13" data-step='13'></div>
+    <div class="beat beat_14" data-step='14'></div>
+    <div class="beat beat_15" data-step='15'></div>
+    <div class="beat beat_16" data-step='16'></div>
+  </div>
+</div>
+
+
+<div class="flex">
+  <div class="pads">
+    <div id="tone1" class="pad green" data-key='90'></div>
+    <div id="tone2" class="pad blue" data-key='65'></div>
+    <div id="tone3" class="pad blue" data-key='81'></div>
+    <div id="tone4" class="pad blue" data-key='49'></div>
+  </div>
+  <div class="pads">
+    <div id="tone5" class="pad blue" data-key='88'></div>
+    <div id="tone6" class="pad blue" data-key='83'></div>
+    <div id="tone7" class="pad blue" data-key='87'></div>
+    <div id="tone8" class="pad blue" data-key='50'></div>
+  </div>
+  <div class="pads">
+    <div id="tone9" class="pad blue" data-key='67'></div>
+    <div id="tone10" class="pad blue" data-key='68'></div>
+    <div id="tone11" class="pad blue" data-key='69'></div>
+    <div id="tone12" class="pad blue" data-key='51'></div>
+  </div>
+  <div class="pads">
+    <div id="tone13" class="pad blue" data-key='86'></div>
+    <div id="tone14" class="pad blue" data-key='70'></div>
+    <div id="tone15" class="pad blue" data-key='82'></div>
+    <div id="tone16" class="pad blue" data-key='52'></div>
+  </div>
+</div>
+
+
+<div id="rec" class="button" data-key=''></div>
+
+<div id="waveform"></div>
+<script>
+
+$(function() {
+var beat_interval;
+var beat_i = 0;
+var resolution = 16;
+var bpm = 120;
+
+var rec_mode = false;
+
+var beat_pad = {};
+var select_tone;
+var rec_button = $('#rec');
+
+  $(window).keydown(function(e){
+	var pad = $('[data-key='+e.keyCode+']');
+	var wavesurfer = pad.data('wavesurfer');
+	var startpos = pad.data('startpos');
+	var positionsec = pad.data('positionsec');
+	wavesurfer.play(positionsec);
+	select_tone={
+		id:pad.attr('id'),
+		wavesurfer:wavesurfer,
+		startpos:startpos,
+		positionsec:positionsec
+	}
+	if(rec_mode){
+		beat_pad[beat_i]['tones'][pad.attr('id')]={
+			wavesurfer:wavesurfer,
+			startpos:startpos,
+			positionsec:positionsec
+			};
+
+		beat_pad[beat_i]['beat'].addClass('active');
+	}
+    return false;
+  });
+
+  $('.pad').on('dragover', function(e) {
+    return false;
+  });
+
+  $('.pad').on('drop', function(e) {
+     onDropFile(e);
+     return false;
+  });
+
+  $('#rec').on('click', function(e) {
+	var rec = $(event.target);
+	rec_mode = !rec_mode;
+	if(rec_mode){
+		rec.addClass('on');
+	}else{
+		rec.removeClass('on');
+	}
+     return false;
+  });
+
+  $('.beat').on('click', function(e) {
+	var beat = $(e.target);
+	var step = beat.data('step');
+	if(!select_tone)return false;
+	if(beat_pad[step]['tones'][select_tone.id]&&beat_pad[step]['tones'][select_tone.id].wavesurfer){
+
+		beat_pad[step]['tones'][select_tone.id]={};
+		beat_pad[step]['beat'].removeClass('active');
+	} else {
+		beat_pad[step]['tones'][select_tone.id]=select_tone.tone;
+		beat_pad[step]['beat'].addClass('active');
+	}
+     return false;
+  });
+
+
+  $('.pad').on('click', function(e) {
+	var pad = $(event.target);
+	var wavesurfer = pad.data('wavesurfer');
+	var startpos = pad.data('startpos');
+	var positionsec = pad.data('positionsec');
+	wavesurfer.play(positionsec);
+	select_tone={
+		id:pad.attr('id'),
+		tone:{
+			wavesurfer:wavesurfer,
+			startpos:startpos,
+			positionsec:positionsec
+		}
+	}
+	if(rec_mode){
+		beat_pad[beat_i]['tones'][pad.attr('id')]={
+			wavesurfer:wavesurfer,
+			startpos:startpos,
+			positionsec:positionsec
+			};
+		beat_pad[beat_i]['beat'].addClass('active');
+	}
+     return false;
+  });
+  $(".pad").each(function() {
+    $(this).data('wavesurfer', WaveSurfer.create({
+      container: '#waveform',
+      //container: this,
+      waveColor: 'violet',
+      progressColor: 'purple'
+    }));
+    $(this).data('position',0);
+    $(this).data('positionsec',0);
+  });
+
+function onDropFile(event) {
+  var file = event.originalEvent.dataTransfer.files[0];
+  if(file.type.match(/^audio\/(wav|ogg|mp3)$/)) {
+	var fr=new FileReader();
+	fr.onload=function(evt) {
+		var pad = $(event.target);
+		var wavesurfer = pad.data('wavesurfer');
+		wavesurfer.load(evt.target.result);
+		pad.data('position',0);
+		wavesurfer.on('seek', function (e) {
+			pad.data('position',e);
+			pad.data('positionsec',e*wavesurfer.getDuration());
+		});
+		pad.addClass('on');
+	};
+	fr.readAsDataURL(file);
+    return;
+  }
+}
+
+for(var i=0;i<resolution+1;i++){
+	beat_pad[i]={ beat : (i==0)? $('.beat_'+resolution):$('.beat_'+i),
+			tones:{}
+		};
+	var beet = (i==0)? $('.beat_'+resolution):$('.beat_'+i);
+	beet.data('beat_pad',beat_pad[i]);
+}
+
+
+function next_beat(){
+	//beat.toggleClass('on');
+	beat_i++;
+	if(beat_i>=resolution+1)beat_i=1;
+	
+	for(key in beat_pad[beat_i]['tones']){
+		var tone=beat_pad[beat_i]['tones'][key];
+		
+		if(!tone)continue;
+		var wavesurfer = tone.wavesurfer;
+		if(!wavesurfer)continue;
+		if(wavesurfer.isPlaying()){
+			wavesurfer.seekTo(tone.positionsec);
+		}else{
+			wavesurfer.play(tone.position);
+		}
+	}
+	
+	beat_pad[beat_i-1]['beat'].removeClass('on');
+	beat_pad[beat_i]['beat'].addClass('on');
+
+	if(rec_mode){
+		rec_button.toggleClass('active');
+	}else{
+		rec_button.removeClass('active')
+	}
+}
+
+//bpm to ms  
+  bpm_time = 60000 / bpm
+// ms to relative speed (based on resolution)  
+  time = bpm_time / (resolution/ 4)
+// set interval for next beat to occur at approriate time
+  beat_interval = window.setInterval(next_beat, time)
+
+function stop_beat(){
+	window.clearInterval(beat_interval);
+}
+
+});
+</script>
+</body>
+</html>
