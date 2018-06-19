@@ -199,6 +199,7 @@ var rec_button = $('#rec');
   $(window).keydown(function(e){
 	var pad = $('[data-key='+e.keyCode+']');
 	var wavesurfer = pad.data('wavesurfer');
+	if(!wavesurfer)return;
 	var startpos = pad.data('startpos');
 	var positionsec = pad.data('positionsec');
 	wavesurfer.play(positionsec);
@@ -258,7 +259,15 @@ var rec_button = $('#rec');
 
   $('.pad').on('click', function(e) {
 	var pad = $(event.target);
+
+	
 	var wavesurfer = pad.data('wavesurfer');
+	if(!wavesurfer.isReady){
+		$('<input type="file" accept=".wav, text/plain">').on('change', function(event) {
+			loadFile(pad,event.target.files[0]);
+		})[0].click();
+		return;
+	}
 	var startpos = pad.data('startpos');
 	var positionsec = pad.data('positionsec');
 	wavesurfer.play(positionsec);
@@ -291,12 +300,11 @@ var rec_button = $('#rec');
     $(this).data('positionsec',0);
   });
 
-function onDropFile(event) {
-  var file = event.originalEvent.dataTransfer.files[0];
+function loadFile(target,file) {
   if(file.type.match(/^audio\/(wav|ogg|mp3)$/)) {
 	var fr=new FileReader();
 	fr.onload=function(evt) {
-		var pad = $(event.target);
+		var pad = target;
 		var wavesurfer = pad.data('wavesurfer');
 		wavesurfer.load(evt.target.result);
 		pad.data('position',0);
@@ -309,6 +317,11 @@ function onDropFile(event) {
 	fr.readAsDataURL(file);
     return;
   }
+}
+
+function onDropFile(event) {
+  var file = event.originalEvent.dataTransfer.files[0];
+  return loadFile($(event.target),file);
 }
 
 for(var i=0;i<resolution+1;i++){
