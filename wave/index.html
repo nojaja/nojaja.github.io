@@ -301,7 +301,7 @@ var rec_button = $('#rec');
   });
 
 function loadFile(target,file) {
-  if(file.type.match(/^audio\/(wav|ogg|mp3)$/)) {
+  if(file.type.match(/^audio\/(x-wav|wav|ogg|mp3)$/)) {
 	var fr=new FileReader();
 	fr.onload=function(evt) {
 		var pad = target;
