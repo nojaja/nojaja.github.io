@@ -378,7 +378,14 @@ function stop_beat(){
 	window.clearInterval(beat_interval);
 }
 
+window.addEventListener("error", function(e){
+    // エラー情報取得
+    $('#list').text(e.colno+' : '+e.lineno+' : '+e.message+' '+e.filename);
 });
+
+});
+
+
 </script>
 </body>
 </html>
