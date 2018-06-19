@@ -263,7 +263,7 @@ var rec_button = $('#rec');
 	
 	var wavesurfer = pad.data('wavesurfer');
 	if(!wavesurfer.isReady){
-		$('<input type="file" accept=".wav, text/plain">').on('change', function(event) {
+		$('<input type="file" accept="audio/*">').on('change', function(event) {
 			loadFile(pad,event.target.files[0]);
 		})[0].click();
 		return;
